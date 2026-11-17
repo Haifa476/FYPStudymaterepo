@@ -1,0 +1,33 @@
+flowchart TB
+  subgraph L1["Presentation layer"]
+    UI["React SPA<br/>React Router, Tailwind CSS, Axios, Recharts"]
+  end
+  subgraph L2["Application layer - Node.js / Express REST API"]
+    direction LR
+    MW["Middleware<br/>helmet, CORS, rate limit,<br/>JWT auth, zod validation,<br/>error handler"]
+    CT["Controllers<br/>auth, course, assessment,<br/>attendance, grade, dashboard"]
+    AE["Academic Analytics Engine<br/>gpaService, attendanceService"]
+    PE["Planning Engine - planned"]
+    CH["Chat orchestration - planned"]
+    MC["mlClient<br/>(timeout, graceful fallback)"]
+    ORM["Sequelize models"]
+    MW --> CT
+    CT --> AE
+    CT --> PE
+    CT --> CH
+    CT --> MC
+    CT --> ORM
+  end
+  subgraph L3["Intelligence layer"]
+    ML["FastAPI ML service<br/>/health (done), /predict (planned)"]
+    LLM["External LLM API - planned"]
+  end
+  subgraph L4["Data layer"]
+    PG[("PostgreSQL")]
+  end
+  UI <-->|"REST / JSON over HTTPS"| MW
+  MC -->|"HTTP / JSON"| ML
+  CH -.->|"HTTPS"| LLM
+  ORM <-->|"SQL"| PG
+  classDef planned stroke-dasharray: 5 5,fill:#f8fafc,stroke:#94a3b8,color:#475569;
+  class PE,CH,LLM planned;

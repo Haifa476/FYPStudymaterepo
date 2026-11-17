@@ -1,0 +1,26 @@
+flowchart LR
+  S(["Student"])
+  subgraph B["StudyMate - account and academic tracking"]
+    UC1(["UC-01 Register"])
+    UC2(["UC-02 Log in / log out"])
+    UC3(["UC-03 Manage profile"])
+    UC4(["UC-04 Manage courses"])
+    UC5(["UC-05 Manage assessments"])
+    UC6(["UC-06 Record attendance"])
+    UC7(["UC-07 Simulate absences"])
+    UC8(["UC-08 Attendance warning"])
+    UC9(["UC-09 Record grades, view GPA"])
+    UC10(["UC-10 Plan target CGPA"])
+    UC11(["UC-11 Grade what-if"])
+  end
+  S --- UC1
+  S --- UC2
+  S --- UC3
+  S --- UC4
+  S --- UC5
+  S --- UC6
+  S --- UC7
+  S --- UC9
+  S --- UC10
+  S --- UC11
+  UC6 -. include .-> UC8

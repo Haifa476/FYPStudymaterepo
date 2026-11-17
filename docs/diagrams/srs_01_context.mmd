@@ -1,0 +1,17 @@
+flowchart TB
+  S(["Student<br/>(only user role)"])
+  subgraph SYS["StudyMate System"]
+    direction TB
+    FE["React web client"]
+    API["Backend REST API<br/>(Node.js / Express)"]
+    FE <-->|"HTTPS / JSON"| API
+  end
+  DB[("PostgreSQL<br/>student data")]
+  ML["ML Risk Service<br/>(FastAPI) - planned"]
+  LLM["LLM API<br/>(chat) - planned"]
+  S <-->|"web browser"| FE
+  API <-->|"SQL (parameterised)"| DB
+  API -.->|"HTTP/JSON: features, risk"| ML
+  API -.->|"HTTPS: grounded context"| LLM
+  classDef planned stroke-dasharray: 5 5,fill:#f8fafc,stroke:#94a3b8,color:#475569;
+  class ML,LLM planned;

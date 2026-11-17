@@ -1,0 +1,19 @@
+flowchart TD
+  A(["Start: open Attendance, choose course"]) --> C["Load records and course policy"]
+  C --> D{"Any classes recorded?"}
+  D -- No --> E["Show No data"]
+  D -- Yes --> F["% = attended / conducted x 100"]
+  F --> G{"Compare % with policy minimum"}
+  G -- "below minimum" --> H["Below minimum (alert)"]
+  G -- "within 5 points above" --> J["Warning"]
+  G -- "5+ points above" --> K["Safe"]
+  H --> L["Show %, formula and working"]
+  J --> L
+  K --> L
+  E --> M{"Student action?"}
+  L --> M
+  M -- "mark present / absent" --> N["Save record, recompute"]
+  N --> C
+  M -- "simulate N absences" --> O["Show attended / (conducted + N)"]
+  O --> M
+  M -- leave --> Q(["End"])

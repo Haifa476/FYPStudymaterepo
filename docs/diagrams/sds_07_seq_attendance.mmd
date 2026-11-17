@@ -1,0 +1,24 @@
+sequenceDiagram
+  autonumber
+  actor S as Student
+  participant UI as Attendance page
+  participant API as Express API
+  participant OWN as ownership check
+  participant AS as AttendanceService
+  participant DB as PostgreSQL
+  S->>UI: choose date, click Absent
+  UI->>API: POST /courses/:id/attendance (Bearer JWT)
+  API->>API: verify JWT, validate body
+  API->>OWN: ownedCourse(courseId, studentId)
+  OWN->>DB: SELECT course WHERE id AND student_id
+  alt not found or not owner
+    OWN-->>UI: 404 Course not found
+  else owner
+    API->>DB: INSERT attendance_records
+    API->>DB: COUNT present / absent for course
+    DB-->>API: attended, conducted
+    API->>AS: summarise(attended, conducted, minPercent, maxAbsences)
+    AS-->>API: percentage, status, formula, working
+    API-->>UI: 201 record + summary
+    UI->>S: show percentage, warning badge and working
+  end

@@ -1,0 +1,21 @@
+sequenceDiagram
+  autonumber
+  actor S as Student
+  participant UI as GPA page
+  participant API as Express API
+  participant GS as GpaService
+  participant DB as PostgreSQL
+  S->>UI: enter target CGPA and remaining credit hours
+  UI->>API: POST /gpa/target (Bearer JWT)
+  API->>DB: SELECT grades JOIN courses WHERE student_id
+  DB-->>API: credit hours and grade points
+  API->>GS: computeGpa(grades)
+  GS-->>API: completed credits C, quality points Q
+  API->>GS: targetRequirement(C, Q, R, target)
+  alt required average above scale maximum
+    GS-->>API: feasible=false, best achievable CGPA
+  else reachable
+    GS-->>API: required average, formula, working
+  end
+  API-->>UI: 200 result
+  UI->>S: message + formula + worked calculation

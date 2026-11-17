@@ -1,0 +1,9 @@
+# Runtime (service skeleton)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+# Tests
+pytest>=8.0
+httpx>=0.27
+# Planned for model development (not used by the skeleton; install when training begins):
+# pandas, numpy, scikit-learn, xgboost, joblib

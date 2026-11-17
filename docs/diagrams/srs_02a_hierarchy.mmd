@@ -1,0 +1,8 @@
+flowchart LR
+  R(["StudyMate<br/>core academic modules"])
+  R --> M1["1 Authentication<br/>and Profile"] --> a1["Register / login / logout (FR-01)<br/>Profile: program, semester,<br/>target CGPA, daily hours"]
+  R --> M2["2 Course<br/>Management"] --> a2["Course CRUD with credit hours<br/>and attendance policy (FR-02)"]
+  R --> M3["3 Assessment<br/>Management"] --> a3["Assessment CRUD: type, due date,<br/>weight, marks (FR-03)"]
+  R --> M4["4 Attendance<br/>Tracking"] --> a4["Log and percentage (FR-04)<br/>Absence what-if (FR-05)<br/>Threshold warning (FR-06)"]
+  R --> M5["5 GPA and CGPA"] --> a5["Semester GPA and CGPA (FR-07)"]
+  R --> M6["6 Target GPA Planner<br/>and What-if"] --> a6["Required average / infeasibility (FR-08)<br/>Grade what-if scenarios (FR-09)"]

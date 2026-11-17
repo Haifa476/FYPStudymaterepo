@@ -1,0 +1,29 @@
+classDiagram
+  direction LR
+  class Student
+  class Course
+  class Assessment
+  class AttendanceRecord
+  class Grade
+  class StudyLog
+  class StudyPlan
+  class PlanTask
+  class RiskPrediction
+  class Budget
+  class Expense
+  class ChatMessage
+  Student "1" --> "0..*" Course : enrols in
+  Course "1" --> "0..*" Assessment : has
+  Course "1" --> "0..*" AttendanceRecord : logs
+  Course "1" --> "0..1" Grade : final result
+  Student "1" --> "0..*" StudyLog : records
+  Course "1" --> "0..*" StudyLog : studied for
+  Student "1" --> "0..*" StudyPlan : generates
+  StudyPlan "1" --> "1..*" PlanTask : contains
+  Assessment "0..1" <-- "0..*" PlanTask : prepares for
+  Student "1" --> "0..*" RiskPrediction : receives
+  Student "1" --> "0..*" Budget : sets monthly
+  Budget "1" --> "0..*" Expense : tracks
+  Student "1" --> "0..*" ChatMessage : exchanges
+  note for Student "Single role: no parent, teacher or admin entities exist"
+  note for StudyPlan "Planned: StudyPlan, PlanTask, RiskPrediction, ChatMessage"

@@ -1,0 +1,11 @@
+flowchart LR
+  S["Student<br/>(external entity)"]
+  P(("0<br/>StudyMate<br/>System"))
+  ML["ML Service<br/>(external, planned)"]
+  LLM["LLM Service<br/>(external, planned)"]
+  S -->|"credentials, courses, assessments,<br/>attendance, grades, study hours, expenses, questions"| P
+  P -->|"calculations with working, warnings,<br/>plans, risk estimates, dashboards, answers"| S
+  P -.->|"feature vector"| ML
+  ML -.->|"risk class, probability, factors"| P
+  P -.->|"grounded context"| LLM
+  LLM -.->|"explanatory text"| P

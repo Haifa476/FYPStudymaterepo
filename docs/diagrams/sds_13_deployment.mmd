@@ -1,0 +1,16 @@
+flowchart LR
+  subgraph CL["Student device"]
+    BR["Web browser<br/>React SPA"]
+  end
+  subgraph HOST["Application host (local machine for the FYP demo)"]
+    FE["Static frontend<br/>(Vite build or dev server)"]
+    NODE["Node.js process<br/>Express API :5000"]
+    PY["Python process<br/>Uvicorn + FastAPI :8000"]
+    PG[("PostgreSQL :5432")]
+  end
+  EXT["External LLM API<br/>(planned)"]
+  BR -->|"HTTPS in production /<br/>HTTP localhost in demo"| FE
+  BR -->|"REST /api/v1"| NODE
+  NODE -->|"SQL"| PG
+  NODE -.->|"HTTP /health, /predict"| PY
+  NODE -.->|"HTTPS"| EXT

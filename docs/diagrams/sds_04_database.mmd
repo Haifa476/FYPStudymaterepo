@@ -1,0 +1,80 @@
+erDiagram
+  students ||--o{ courses : "student_id"
+  courses ||--o{ assessments : "course_id"
+  courses ||--o{ attendance_records : "course_id"
+  courses ||--o| grades : "course_id (unique)"
+  students ||--o{ study_logs : "student_id"
+  courses ||--o{ study_logs : "course_id"
+  students ||--o{ budgets : "student_id"
+  budgets ||--o{ expenses : "budget_id"
+  students {
+    serial student_id PK
+    varchar name
+    varchar email UK
+    varchar password_hash
+    varchar program
+    smallint current_semester
+    numeric target_cgpa
+    numeric daily_available_hours
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  courses {
+    serial course_id PK
+    int student_id FK
+    varchar code
+    varchar title
+    varchar instructor
+    smallint credit_hours
+    smallint semester
+    numeric attendance_policy_min_percent
+    smallint max_allowed_absences
+    smallint difficulty_rating
+  }
+  assessments {
+    serial assessment_id PK
+    int course_id FK
+    varchar type
+    varchar title
+    date due_date
+    numeric weight_percent
+    numeric max_marks
+    numeric obtained_marks
+    varchar status
+  }
+  attendance_records {
+    serial record_id PK
+    int course_id FK
+    date date
+    varchar status
+  }
+  grades {
+    serial grade_id PK
+    int course_id FK
+    varchar letter_grade
+    numeric grade_points
+    smallint semester
+    smallint credit_hours
+  }
+  study_logs {
+    serial log_id PK
+    int student_id FK
+    int course_id FK
+    date date
+    numeric hours
+    smallint focus_rating
+  }
+  budgets {
+    serial budget_id PK
+    int student_id FK
+    char month
+    numeric pocket_money_amount
+  }
+  expenses {
+    serial expense_id PK
+    int budget_id FK
+    varchar category
+    numeric amount
+    date date
+    varchar note
+  }

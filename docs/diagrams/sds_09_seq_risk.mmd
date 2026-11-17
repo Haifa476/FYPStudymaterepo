@@ -1,0 +1,25 @@
+sequenceDiagram
+  autonumber
+  actor S as Student
+  participant UI as React client
+  participant API as Express API
+  participant AE as Analytics Engine
+  participant MC as mlClient
+  participant ML as FastAPI ML service
+  participant DB as PostgreSQL
+  Note over S,DB: PLANNED flow (not implemented in the 25% build). Only the /ml/status health check exists today.
+  S->>UI: open risk view
+  UI->>API: GET /risk (planned)
+  API->>AE: build feature vector from stored data
+  AE-->>API: features
+  API->>MC: predict(features)
+  MC->>ML: POST /predict (timeout)
+  alt ML service unavailable or slow
+    ML--xMC: error / timeout
+    MC-->>API: unavailable
+    API-->>UI: 200 other data + "risk estimate unavailable"
+  else ok
+    ML-->>MC: class, probability, top factors
+    API->>DB: INSERT risk_predictions
+    API-->>UI: estimate with contributing factors
+  end

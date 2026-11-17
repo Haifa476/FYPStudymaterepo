@@ -1,0 +1,42 @@
+flowchart TB
+  subgraph FE["Frontend (React)"]
+    PG1["Pages: Login, Register, Dashboard,<br/>Courses, CourseDetail, Attendance, GPA"]
+    CTX["AuthContext + Axios client<br/>(token, 401 handling)"]
+    UIC["Shared UI: Layout, FormulaBox,<br/>Modal, Badge"]
+  end
+  subgraph BE["Backend (Express)"]
+    R["routes/index.js"]
+    M["middleware: auth, validate,<br/>errorHandler"]
+    C["controllers/*"]
+    subgraph AN["Analytics module (pure functions)"]
+      G["gpaService"]
+      A["attendanceService"]
+    end
+    subgraph PL["Planning module - planned"]
+      PS["priority scoring and scheduler"]
+    end
+    subgraph MLM["ML integration module"]
+      MC["mlClient"]
+    end
+    subgraph CHM["Chat module - planned"]
+      CO["context builder + LLM client"]
+    end
+    MO["models (Sequelize) + ownership"]
+  end
+  subgraph MS["ML service (FastAPI)"]
+    H["/health"]
+    PR["/predict - planned"]
+  end
+  DB[("PostgreSQL")]
+  PG1 --> CTX --> R
+  R --> M --> C
+  C --> G
+  C --> A
+  C --> PS
+  C --> MC
+  C --> CO
+  C --> MO --> DB
+  MC --> H
+  MC -.-> PR
+  classDef planned stroke-dasharray: 5 5,fill:#f8fafc,stroke:#94a3b8,color:#475569;
+  class PS,CO,PR planned;

@@ -1,0 +1,24 @@
+sequenceDiagram
+  autonumber
+  actor S as Student
+  participant UI as React client
+  participant API as Express API
+  participant V as Validation + rate limit
+  participant DB as PostgreSQL
+  S->>UI: enter email and password
+  UI->>API: POST /api/v1/auth/login
+  API->>V: rate limit check, zod schema
+  alt invalid payload
+    V-->>UI: 400 Validation failed
+  else valid
+    API->>DB: SELECT student by email
+    DB-->>API: student row (password_hash)
+    API->>API: bcrypt.compare(password, hash)
+    alt wrong email or password
+      API-->>UI: 401 Invalid email or password
+    else correct
+      API->>API: sign JWT (sub = student_id, expiry)
+      API-->>UI: 200 token + student
+      UI->>UI: store token, redirect to dashboard
+    end
+  end

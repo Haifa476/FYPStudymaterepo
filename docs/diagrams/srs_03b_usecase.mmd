@@ -1,0 +1,22 @@
+flowchart LR
+  S(["Student"])
+  subgraph B["StudyMate - planning, intelligence and lifestyle"]
+    UC12(["UC-12 Log study hours"])
+    UC13(["UC-13 Generate study plan"])
+    UC14(["UC-14 View risk prediction"])
+    UC15(["UC-15 Manage pocket money"])
+    UC16(["UC-16 Ask chat assistant"])
+    UC17(["UC-17 View dashboard"])
+    UC18(["UC-18 Export / delete data"])
+  end
+  ML(["ML Service<br/>(secondary actor)"])
+  LLM(["LLM Service<br/>(secondary actor)"])
+  S --- UC12
+  S --- UC13
+  S --- UC14
+  S --- UC15
+  S --- UC16
+  S --- UC17
+  S --- UC18
+  UC14 --- ML
+  UC16 --- LLM

@@ -1,0 +1,124 @@
+classDiagram
+  direction TB
+  class AuthController {
+    +register()
+    +login()
+    +logout()
+    +me()
+    +updateProfile()
+  }
+  class CourseController {
+    +list()
+    +create()
+    +get()
+    +update()
+    +remove()
+  }
+  class AssessmentController {
+    +list()
+    +create()
+    +update()
+    +remove()
+  }
+  class AttendanceController {
+    +list()
+    +create()
+    +remove()
+    +summary()
+    +whatIf()
+    +overview()
+  }
+  class GradeController {
+    +list()
+    +create()
+    +update()
+    +remove()
+    +summary()
+    +target()
+    +whatIf()
+  }
+  class DashboardController {
+    +summary()
+  }
+  class MlController {
+    +status()
+  }
+  class GpaService {
+    +pointsForLetter()
+    +computeGpa()
+    +computeSummary()
+    +targetRequirement()
+    +whatIf()
+  }
+  class AttendanceService {
+    +summarise()
+    +whatIfAbsences()
+    +classify()
+    +maxAdditionalAbsences()
+  }
+  class MlClient {
+    +checkHealth()
+  }
+  class Ownership {
+    +ownedCourse()
+    +ownedAssessment()
+    +ownedGrade()
+    +ownedAttendance()
+  }
+  class Student {
+    student_id
+    name
+    email
+    password_hash
+    program
+    current_semester
+    target_cgpa
+    daily_available_hours
+  }
+  class Course {
+    course_id
+    code
+    title
+    instructor
+    credit_hours
+    semester
+    attendance_policy_min_percent
+    max_allowed_absences
+    difficulty_rating
+  }
+  class Assessment {
+    assessment_id
+    type
+    title
+    due_date
+    weight_percent
+    max_marks
+    obtained_marks
+    status
+  }
+  class AttendanceRecord {
+    record_id
+    date
+    status
+  }
+  class Grade {
+    grade_id
+    letter_grade
+    grade_points
+    semester
+    credit_hours
+  }
+  AuthController ..> Student
+  CourseController ..> Ownership
+  AssessmentController ..> Ownership
+  AttendanceController ..> Ownership
+  GradeController ..> Ownership
+  AttendanceController ..> AttendanceService
+  GradeController ..> GpaService
+  DashboardController ..> GpaService
+  DashboardController ..> AttendanceService
+  MlController ..> MlClient
+  Student "1" o-- "*" Course
+  Course "1" o-- "*" Assessment
+  Course "1" o-- "*" AttendanceRecord
+  Course "1" o-- "0..1" Grade

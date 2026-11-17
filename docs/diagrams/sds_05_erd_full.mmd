@@ -1,0 +1,14 @@
+erDiagram
+  STUDENT ||--o{ COURSE : enrols
+  COURSE ||--o{ ASSESSMENT : has
+  COURSE ||--o{ ATTENDANCE_RECORD : logs
+  COURSE ||--o| GRADE : "final grade"
+  STUDENT ||--o{ STUDY_LOG : records
+  COURSE ||--o{ STUDY_LOG : "studied for"
+  STUDENT ||--o{ STUDY_PLAN : "PLANNED generates"
+  STUDY_PLAN ||--|{ PLAN_TASK : "PLANNED contains"
+  ASSESSMENT ||--o{ PLAN_TASK : "PLANNED prepares"
+  STUDENT ||--o{ RISK_PREDICTION : "PLANNED receives"
+  STUDENT ||--o{ BUDGET : sets
+  BUDGET ||--o{ EXPENSE : tracks
+  STUDENT ||--o{ CHAT_MESSAGE : "PLANNED exchanges"
