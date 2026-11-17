@@ -21,21 +21,18 @@ Node.js 18+ · PostgreSQL 14+ · Python 3.10+ (for the ML service)
 ```bash
 createdb studymate
 psql -d studymate -f database/schema.sql
-# (optional, separate DB for tests – tables are truncated by the integration tests)
 createdb studymate_test && psql -d studymate_test -f database/schema.sql
 ```
 ### 2. Backend
 ```bash
 cd backend
-cp .env.example .env          # then fill in DATABASE_URL and JWT_SECRET (never commit .env)
 npm install
-npm run dev                   # http://localhost:5000/api/v1/health
+npm run dev                   
 SEED_DEMO_PASSWORD=choose-one npm run seed   # optional demo data: demo@studymate.local
 ```
 ### 3. Frontend
 ```bash
 cd frontend
-cp .env.example .env          # optional
 npm install
 npm run dev                   # http://localhost:5173  (proxies /api to the backend)
 ```
